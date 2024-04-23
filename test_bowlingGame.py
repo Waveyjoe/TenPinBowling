@@ -10,6 +10,7 @@ class TestBowlingGame(unittest.TestCase):
     def setUp(self):
         self.game = bowlingGame.BowlingGame()
 
+
     def testGutterGame(self):
         for i in range(0, 20):
             self.game.rolls(0)
@@ -38,3 +39,7 @@ class TestBowlingGame(unittest.TestCase):
     def rollMany(self, pins,rolls):
         for i in range(rolls):
             self.game.rolls(pins)
+
+
+if __name__ == '__main__':
+    unittest.main()
