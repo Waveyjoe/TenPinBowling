@@ -9,6 +9,13 @@ class BowlingGame:
 
     # Append rolls list with the number of pins knocked down on each roll
     def roll(self,pins):
+        # Invalid Input: Number of pins knocked over is < 0 or > 10
+        if pins < 0 or pins > 10:
+            raise ValueError("Input must be a whole number from 0 - 10")
+        # Invalid Input: non-integer
+        if not isinstance(pins, int):
+            raise TypeError("Input must be a whole number from 0 - 10")
+        
         self.rolls.append(pins)
 
     # Calculate the total score

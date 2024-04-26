@@ -55,6 +55,16 @@ class TestBowlingGame(unittest.TestCase):
         self.rollMany(0,15)
         self.assertEqual(self.game.score(), 41)
         
+    def testRollInvalidInput(self):
+        # Invalid Input: Number of pins knocked over is < 0 or > 10
+        with self.assertRaises(ValueError):
+            self.game.roll(11)
+        with self.assertRaises(ValueError):
+            self.game.roll(-1)
+        # Invalid Input: Input is not an integer
+        with self.assertRaises(TypeError):
+            self.game.roll('a')
+
 
     def testPerfectGame(self):
         self.rollMany(10,12)
@@ -64,11 +74,13 @@ class TestBowlingGame(unittest.TestCase):
     def testAllSpares(self):
         self.rollMany(5,21)
         self.assertEqual(self.game.score(), 150)
+
     
 
-    def rollMany(self, pins,rolls):
+    def rollMany(self, pins, rolls):
         for i in range(rolls):
             self.game.roll(pins)
+        
 
 
 
