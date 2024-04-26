@@ -3,23 +3,29 @@
 #This file has information about Bowling Game for which the description is provided in project assessment.
 
 class BowlingGame:
-    # Initiate game with an empty list which will hold the scores of each roll
+    # 
     def __init__(self):
+        '''Initiate game with an empty 
+        list which will hold the scores 
+        of each roll'''
         self.rolls=[]
 
-    # Append rolls list with the number of pins knocked down on each roll
+    # 
     def roll(self,pins):
-        # Invalid Input: Number of pins knocked over is < 0 or > 10
+        '''Append rolls list with the 
+        number of pins knocked down on
+         each roll, input must be whole number from 0 - 10'''
+        # Invalid Input Catch: Number of pins knocked over is < 0 or > 10
         if pins < 0 or pins > 10:
             raise ValueError("Input must be a whole number from 0 - 10")
-        # Invalid Input: non-integer
+        # Invalid Input Catch: non-integer
         if not isinstance(pins, int):
             raise TypeError("Input must be a whole number from 0 - 10")
-        
         self.rolls.append(pins)
 
-    # Calculate the total score
+     
     def score(self):
+        '''Calculate the total score'''
         result = 0
         rollIndex=0
         for frameIndex in range(10):
@@ -34,24 +40,25 @@ class BowlingGame:
                 rollIndex +=2
         return result
 
-    # Boolean to determine if a roll is a strike
     def isStrike(self, rollIndex):
+        '''Function that returns a boolean to determine if a roll is a strike'''
         return self.rolls[rollIndex] == 10
 
-    # Boolean to determine if a roll is a spare
     def isSpare(self, rollIndex):
+        '''Function that returns a boolean to determine if a roll is a spare'''
         return self.rolls[rollIndex]+ self.rolls[rollIndex+1]==10
     
-    #  Calculate the score from a strike by adding 10 + the next 2 rolls
+  
     def strikeScore(self,rollIndex):
+        '''Calculate the score from a strike by adding 10 + the next 2 rolls'''
         return  10+ self.rolls[rollIndex+1]+ self.rolls[rollIndex+2]
 
-    #  Calculate the score from a spare by adding 10 + the next roll
     def spareScore(self,rollIndex):
+        '''Calculate the score from a spare by adding 10 + the next roll'''
         return  10+ self.rolls[rollIndex+2]
 
-    # Calculate the score from an open frame by adding the 2 rolls together
     def frameScore(self, rollIndex):
+        '''Calculate the score from an open frame by adding the 2 rolls together'''
         return self.rolls[rollIndex] + self.rolls[rollIndex + 1]
 		
 
