@@ -7,8 +7,12 @@ class BowlingGame:
     def __init__(self):
         '''Initiate game with an empty 
         list which will hold the scores 
-        of each roll'''
-        self.rolls=[]
+        of each roll, and the classes which 
+        contain the scoring and checking functionality'''
+        
+        self.rolls = []
+        self.checker = BowlingCheck(self.rolls)
+        self.scorer = BowlingCalculateScore(self.rolls)
 
     # 
     def roll(self,pins):
@@ -52,24 +56,37 @@ class BowlingGame:
         result = 0
         rollIndex=0
         for frameIndex in range(10):
-            if self.isStrike(rollIndex):
-                result += self.strikeScore(rollIndex)
+            if self.checker.isStrike(rollIndex):
+                result += self.scorer.strikeScore(rollIndex)
                 rollIndex +=1
-            elif self.isSpare(rollIndex):
-                result += self.spareScore(rollIndex)
+            elif self.checker.isSpare(rollIndex):
+                result += self.scorer.spareScore(rollIndex)
                 rollIndex +=2
             else:
-                result += self.frameScore(rollIndex)
+                result += self.scorer.frameScore(rollIndex)
                 rollIndex +=2
         return result
+    
+
+class BowlingCheck:
+    '''Class to handle checks for whether a frame is a strike, spare or open frame.'''
+    
+    def __init__(self, rolls):
+        '''
+        Set up check class.
+
+        Args:
+            rolls(list): The list of scores from the bowling game.
+        '''
+        self.rolls = rolls
 
     def isStrike(self, rollIndex):
         '''
         Function that returns a boolean to determine if a roll is a strike
-        
+            
         Args: 
             rollIndex(int): The index of the roll in the rolls list
-        
+            
         Returns:
             boolean: True if the roll at the specified index is a strike, otherwise false.
         '''
@@ -78,7 +95,7 @@ class BowlingGame:
     def isSpare(self, rollIndex):
         '''
         Function that returns a boolean to determine if a roll is a spare
-        
+            
         Args: 
             rollIndex(int): The index of the roll in the rolls list
 
@@ -87,7 +104,19 @@ class BowlingGame:
         '''
         return self.rolls[rollIndex]+ self.rolls[rollIndex+1]==10
     
-  
+
+class BowlingCalculateScore:
+    '''Class that holds the functions to calculate the score for a game'''
+    
+    def __init__(self, rolls):
+        self.rolls = rolls
+        '''
+        Set up score calculation class.
+
+        Args:
+            rolls(list): The list of scores from the bowling game.
+        '''
+
     def strikeScore(self,rollIndex):
         '''
         Calculate the score from a strike
